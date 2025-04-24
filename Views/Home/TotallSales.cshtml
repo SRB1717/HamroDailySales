@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Daily_Sales.Models.Sale>
+
+@{
+    ViewData["Title"] = "Total Sales";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-2xl font-semibold mb-4">Total Sales</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<a class="btn btn-primary mb-3" asp-controller="Home" asp-action="Sales">Enter New Sale</a>
+
+@if (Model == null || !Model.Any())
+{
+    <p>No sales data available.</p>
+}
+else
+{
+    <table class="table-auto border-collapse w-full shadow rounded-lg overflow-hidden">
+        <thead class="bg-gray-200">
+            <tr>
+                <th class="px-4 py-2 border">Item Type</th>
+                <th class="px-4 py-2 border">Brand</th>
+                <th class="px-4 py-2 border">Quantity</th>
+                <th class="px-4 py-2 border">Price</th>
+                <th class="px-4 py-2 border">Remarks</th>
+                <th class="px-4 py-2 border">Created Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var sale in Model)
+            {
+                <tr class="hover:bg-gray-100">
+                    <td class="px-4 py-2 border">@sale.ItemType</td>
+                    <td class="px-4 py-2 border">@sale.Brand</td>
+                    <td class="px-4 py-2 border">@sale.Quantity</td>
+                    <td class="px-4 py-2 border">@sale.Price.ToString("C")</td>
+                    <td class="px-4 py-2 border">@sale.Remarks</td>
+                    <td class="px-4 py-2 border">@sale.CreatedDate.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
